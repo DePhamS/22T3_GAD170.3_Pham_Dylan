@@ -10,21 +10,24 @@ namespace DylanPham
         [SerializeField] private GameObject block;
         [SerializeField] private Material tangibleMaterial;
         [SerializeField] private Material intangibleMaterial;
+        private void OnEnable()
+        {
+            Debug.LogWarning("OnEnable() called from [" + gameObject.name + "].");
+
+            EventsManager.OnButtonActivateEvent += TurnTangible;
+        }
+
+        private void OnDisable()
+        {
+            Debug.LogWarning("OnDisable() called from [" + gameObject.name + "].");
+
+            EventsManager.OnButtonActivateEvent -= TurnTangible;
+        }
 
         private void TurnTangible()
         {
-            // Detecting if the box collider is on
-            if(block.GetComponent<BoxCollider>().enabled == true)
-            {
-                // If so then it turns it off
-                block.GetComponent<BoxCollider>().enabled = false;
+            Debug.LogWarning("TurnTangible() called from [" + gameObject.name + "].");
 
-                // Changes materials
-                block.GetComponent<MeshRenderer>().material = intangibleMaterial;
-            }
-        }
-        private void TurnIntangible()
-        {
             // Detecting if the box collider is off
             if (block.GetComponent<BoxCollider>().enabled == false)
             {
@@ -33,6 +36,20 @@ namespace DylanPham
 
                 // Changes materials
                 block.GetComponent<MeshRenderer>().material = tangibleMaterial;
+            }
+        }
+        private void TurnIntangible()
+        {
+            Debug.LogWarning("TurnIntangible() called from [" + gameObject.name + "].");
+
+            // Detecting if the box collider is on
+            if (block.GetComponent<BoxCollider>().enabled == true)
+            {
+                // If so then it turns it off
+                block.GetComponent<BoxCollider>().enabled = false;
+
+                // Changes materials
+                block.GetComponent<MeshRenderer>().material = intangibleMaterial;
             }
         }
     }
